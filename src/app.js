@@ -6,21 +6,41 @@ export class App extends React.Component{
         super(props);
 
         this.state = {
-            buyItems: ['milk', 'bread', 'fruit', 'ham']
+            buyItems: ['milk', 'bread', 'fruit', 'ham'],
+            message: ''
         }
     }
     addItem(e){
         e.preventDefault();
         const {buyItems} = this.state;
         const newItem = this.newItem.value;
+        const isOnTheList = buyItems.includes(newItem);
+
+        if(isOnTheList){
+            this.setState ({
+                message: 'This item is already on the list.'
+            })
+            this.addForm.reset();
+        }else{
+            newItem !== '' && this.setState({
+                buyItems: [...this.state.buyItems, newItem],
+                message: ''
+            })
+            this.addForm.reset();
+        }
+    }
+    removeItem(item){
+        const newBuyItems = this.state.buyItems.filter(buyItem => {
+            return buyItem !== item;
+        });
 
         this.setState({
-            buyItems: [...this.state.buyItems, newItem]
+            buyItems: [...newBuyItems]
         })
-        this.addForm.reset();
     }
+
     render(){
-        const {buyItems} = this.state;
+        const {buyItems, message} = this.state;
         return (
             <div>
                 <header>
@@ -32,6 +52,9 @@ export class App extends React.Component{
                         </div>
                         <button type="submit" className="btn btn-primary">Add</button>
                     </form>
+                    {
+                        message !== '' && <p className="message text-danger">{message}</p>
+                    }
                 </header>
                 <table className="table table-striped">
                     <caption>Shopping List</caption>
@@ -49,7 +72,9 @@ export class App extends React.Component{
                                 <tr key={item}>
                                 <th scope="row"></th>
                                 <td>{item}</td>
-                                <td>Button</td>
+                                <td>
+                                    <button onClick={(e) => this.removeItem(item)} type="button" className="btn btn-default btn-sm">Remove</button>
+                                </td>
                                 </tr>)
                             })
                         }
