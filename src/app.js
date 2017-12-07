@@ -7,8 +7,7 @@ export class App extends React.Component{
 
         this.state = {
             buyItems: ['milk', 'bread', 'fruit', 'ham'],
-            message: '',
-            count: []
+            message: ''
         }
     }
     addItem(e){
@@ -72,22 +71,19 @@ export class App extends React.Component{
                 {
                 buyItems.length > 0 &&
                     <table className="table table-striped">
-                        <caption>Shopping List</caption>
                         <thead>
                             <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Item</th>
-                            <th scope="col">Action</th>
+                            <th scope="col" className="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
                                 buyItems.map(item => {
                                     return (
-                                    <tr key={item}>
-                                    <th scope="row"></th>
+                                    <tr key={item}>                                    
                                     <td>{item}</td>
-                                    <td>
+                                    <td className="text-right">
                                         <button onClick={(e) => this.removeItem(item)} type="button" className="btn btn-default btn-sm">Remove</button>
                                     </td>
                                     </tr>)
@@ -96,7 +92,7 @@ export class App extends React.Component{
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colSpan="2">&nbsp;</td>
+                                <td>&nbsp;</td>
                                 <td className="text-right">
                                 <button onClick={(e) => this.removeAllItems()} type="button" className="btn btn-default btn-sm top-space">Remove all items</button>
                                 </td>
